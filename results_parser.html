@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Read Text File</title>
+</head>
+
+<body>
+    <input type="file" name="inputfile" id="inputfile">
+    <br>
+    <button onclick="calculateResult()">Calculate!</button>
+
+    <pre id="output"></pre>
+
+
+    <script type="text/javascript">
+        document.getElementById('inputfile')
+            .addEventListener('change', function () {
+
+                var fr = new FileReader();
+                fr.onload = function () {
+                    document.getElementById('output')
+                        .textContent = fr.result;
+                }
+
+                fr.readAsText(this.files[0]);
+            })
+
+        function calculateResult() {
+            const matches = document.getElementById('output')
+                .textContent.match(/\+7 \(\d{3}\)\s\*{3}-\d{2}-\d{2}/g);
+
+            let resultObj = {};
+            matches.forEach(phoneNumber => {
+                resultObj.hasOwnProperty(phoneNumber)
+                    ? resultObj[`${phoneNumber}`]++
+                    : resultObj[`${phoneNumber}`] = 1
+            });
+
+            var sortable = [];
+            for (var vehicle in resultObj) {
+                sortable.push([vehicle, resultObj[vehicle]]);
+            }
+
+            sortable.sort(function (a, b) {
+                return a[1] - b[1];
+            });
+            console.log(sortable);
+        }
+    </script>
+</body>
+
+</html>
