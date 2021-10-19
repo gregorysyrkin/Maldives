@@ -1,10 +1,10 @@
 callback = () => {
     if (targetNode.textContent === "В эфире") {
         var mp3 = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 5; i++) {
             setTimeout(function () { (new Audio(mp3)).play() }, i * 1000)
-            alert("Не забудьте взять крем от загара.");
         }
+        // alert("Не забудьте взять крем от загара.");
     }
 }
 

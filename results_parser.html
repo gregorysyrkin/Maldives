@@ -14,21 +14,20 @@
 
 
     <script type="text/javascript">
+        var inputText = "";
         document.getElementById('inputfile')
             .addEventListener('change', function () {
 
                 var fr = new FileReader();
                 fr.onload = function () {
-                    document.getElementById('output')
-                        .textContent = fr.result;
+                    inputText = fr.result;
                 }
 
                 fr.readAsText(this.files[0]);
             })
 
         function calculateResult() {
-            const matches = document.getElementById('output')
-                .textContent.match(/\+7 \(\d{3}\)\s\*{3}-\d{2}-\d{2}/g);
+            const matches = inputText.match(/\+7 \(\d{3}\)\s\*{3}-\d{2}-\d{2}/g);
 
             let resultObj = {};
             matches.forEach(phoneNumber => {
@@ -42,10 +41,32 @@
                 sortable.push([vehicle, resultObj[vehicle]]);
             }
 
-            sortable.sort(function (a, b) {
+            sortable.sort(function (b, a) {
                 return a[1] - b[1];
             });
             console.log(sortable);
+
+            let outputEl = document.getElementById("output");
+
+            const myScore = sortable.find(el => el[0] === "+7 (923) ***-82-28")[1];
+
+            sortable.forEach((el, index) => {
+                const output = `${index + 1}. ${index + 1 < 10 ? " " : ""}Ответов: ${el[1]}, Телефон: ${el[0]}\n`
+                const outputSingleEl = document.createElement("p");
+                outputSingleEl.textContent = output;
+                outputSingleEl.style.margin = "0";
+
+                if (el[0] === "+7 (923) ***-82-28")
+                    outputSingleEl.style.color = "red"
+
+                else if (index + 1 === 10)
+                    outputSingleEl.style.color = "fuchsia"
+
+                else if (el[1] === myScore)
+                    outputSingleEl.style.color = "orange"
+
+                outputEl.appendChild(outputSingleEl)
+            })
         }
     </script>
 </body>
