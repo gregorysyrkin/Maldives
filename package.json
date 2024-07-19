@@ -1,0 +1,7 @@
+{
+  "name": "Maldives-package",
+  "version": "1.7.6",
+  "dependencies": {
+    "cordova-plugin-privacyscreen-enhanced": "1.0.7"
+  },
+}
